@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 379890253}
   - component: {fileID: 379890254}
   - component: {fileID: 379890255}
+  - component: {fileID: 379890256}
   m_Layer: 0
   m_Name: LanternLight
   m_TagString: Untagged
@@ -200,9 +201,9 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.4867924, g: 0.27462438, b: 0.27462438, a: 1}
-  m_Intensity: 1.79
-  m_Range: 1.97
+  m_Color: {r: 0.6981132, g: 0.5571734, b: 0.5571734, a: 1}
+  m_Intensity: 1.32
+  m_Range: 3
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -243,7 +244,7 @@ Light:
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 2
   m_ColorTemperature: 1500
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -289,9 +290,42 @@ MonoBehaviour:
   _back: {x: 0.12, y: -0.09, z: 0.2}
   _left: {x: -0.3, y: -0.09, z: 0.15}
   _front: {x: -0.12, y: -0.09, z: -0.2}
-  _right: {x: 0.3, y: -0.09, z: -0.15}
+  _right: {x: 0.3, y: -0.09, z: -0.15001}
   _player: {fileID: 1544376138}
   _targetAnimator: {fileID: 1544376140}
+--- !u!114 &379890256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379890251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9df43c4583d4e134e9767c0c4af32876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lanternLight: {fileID: 379890253}
+  _strengthNumMax: 5
+  _strengthLevels:
+  - intensity: 0
+    indirectMultiplier: 0
+    range: 0
+  - intensity: 0.2
+    indirectMultiplier: 0
+    range: 0.5
+  - intensity: 1
+    indirectMultiplier: 0
+    range: 2
+  - intensity: 2
+    indirectMultiplier: 0
+    range: 3
+  - intensity: 6
+    indirectMultiplier: 0
+    range: 4
+  - intensity: 10
+    indirectMultiplier: 0
+    range: 3
 --- !u!1 &1324208207
 GameObject:
   m_ObjectHideFlags: 0
