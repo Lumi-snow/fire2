@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LanarernStrengthController : MonoBehaviour
 {
+    [SerializeField] private LanternNoiseController _LanternNoiseController;
+
     private int _strengthLevel;
 
     [Header("ランタンの Light")]
@@ -34,6 +36,7 @@ public class LanarernStrengthController : MonoBehaviour
 
     void Update()
     {
+        //ランタンの灯りの強さ変更(一旦OLキーで変更できるようにしている)
         if (Input.GetKeyDown(KeyCode.O) && _strengthLevel < _strengthNumMax)
         {
             _strengthLevel++;
@@ -54,5 +57,11 @@ public class LanarernStrengthController : MonoBehaviour
         _lanternLight.intensity = data.intensity;
         _lanternLight.range = data.range;
         _lanternLight.bounceIntensity = data.indirectMultiplier;
+
+        //LanternNoiseControllerのIntensityの基準値を変更させる
+        if (_LanternNoiseController != null)
+        {
+            _LanternNoiseController.SetBaseIntensity(data.intensity);
+        }
     }
 }
