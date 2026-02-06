@@ -345,7 +345,7 @@ MonoBehaviour:
   _temperatureMin: 1500
   _temperatureMax: 2200
   _temperatureSpeed: 1.5
-  _changeSpeed: 0
+  _changeSpeed: 5
 --- !u!1 &1324208207
 GameObject:
   m_ObjectHideFlags: 0
