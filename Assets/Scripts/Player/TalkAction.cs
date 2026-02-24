@@ -1,20 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TalkAction : MonoBehaviour
 {
-    public GameObject targetNpc;
-    public GameObject targetItem;
+    private GameObject _targetNpc;
+    private GameObject _targetItem;
+
+    [Header("テキストウィンドウUI")]
+    [SerializeField] private GameObject _textWindow;
+
+    [Header("選択肢UI")]
+    [SerializeField] private GameObject _option1;
+    [SerializeField] private GameObject _option2;
+
+    private void Start()
+    {
+        _textWindow.SetActive(false);
+        _option1.SetActive(false);
+        _option2.SetActive(false);
+    }
 
     void Update()
     {
-        // 接触中にキー入力
-        if (targetNpc != null && Input.GetKeyDown(KeyCode.Return))
+        // 接触中にキー入力したら会話を試みる
+        if (_targetNpc != null && Input.GetKeyDown(KeyCode.Return))
         {
-            if (targetNpc.CompareTag("NPC"))
+            if (_targetNpc.CompareTag("NPC"))
             {
                 Debug.Log("NPCに接触して対話を試みた");
+                _textWindow.SetActive(true);
             }
         }
     }
@@ -25,7 +41,7 @@ public class TalkAction : MonoBehaviour
 
         if (other.CompareTag("NPC"))
         {
-            targetNpc = other.gameObject;
+            _targetNpc = other.gameObject;
             Debug.Log(other.gameObject + "と接触中");
         }
     }

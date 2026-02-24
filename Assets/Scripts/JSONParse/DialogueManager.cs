@@ -13,8 +13,6 @@ public class DialogueManager : MonoBehaviour
         dialogue = JsonUtility.FromJson<Dialogue>(json.text);
 
         // 結果を表示
-        Debug.Log($"JSONからデータを読み取りました: {dialogue.title}");
-        //foreach (var line in dialogue.lines)
-        //    Debug.Log($"- {line}");
+        Debug.Log($"JSONからデータを読み取りました: {dialogue.name}");
     }
 }

@@ -7,6 +7,11 @@ using UnityEngine;
 [Serializable]
 public class Dialogue
 {
-    public string title;
-    public string[] lines;
+    public string name;
+    public string startNode;
+    public string nodes;
+    public string id;
+    public string speaker;
+    public string text;
+    public string next;
 }
