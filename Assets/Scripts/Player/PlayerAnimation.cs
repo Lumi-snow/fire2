@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerAnimation : MonoBehaviour
-{    
+{
+    [SerializeField] private Player _player;
     private Animator _animator;
     private int _direction = 0;
     private bool _isMoving = false;
@@ -17,30 +19,35 @@ public class PlayerAnimation : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
-        {
-            _direction = 1;
-            _isMoving = true;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            _direction = 2;
-            _isMoving = true;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            _direction = 3;
-            _isMoving = true;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            _direction = 4;
-            _isMoving = true;
-        }
+        if (_player.CurrentState != PlayerState.Walk)
+            return;
         else
-            _isMoving = false;
+        {
+            if (Input.GetKey(KeyCode.W))
+            {
+                _direction = 1;
+                _isMoving = true;
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                _direction = 2;
+                _isMoving = true;
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                _direction = 3;
+                _isMoving = true;
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                _direction = 4;
+                _isMoving = true;
+            }
+            else
+                _isMoving = false;
 
             _animator.SetBool("IsMoving", _isMoving);
-        _animator.SetInteger("Direction", _direction);
+            _animator.SetInteger("Direction", _direction);
+        }
     }
 }
