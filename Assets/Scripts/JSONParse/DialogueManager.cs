@@ -1,7 +1,9 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -12,28 +14,29 @@ public class DialogueManager : MonoBehaviour
     [Header("テキストウィンドウ用テキスト")]
     [SerializeField] private TextMeshProUGUI _windowText;
 
-    private Dialogue dialogue;
-    private Dictionary<string, DialogueNode> nodeDictionary;
-
-    private DialogueNode currentNode;
-    private bool isTalking = false;
+    private Dialogue _dialogue;
+    private Dictionary<string, DialogueNode> _nodeDictionary;
+    private DialogueNode _currentNode;
+    private bool _isTalking;
 
     private void Start()
     {
         _textWindow.SetActive(false);
 
-        dialogue = JsonUtility.FromJson<Dialogue>(json.text);
+        _dialogue = JsonUtility.FromJson<Dialogue>(json.text);
 
         //ノードを辞書に変換
-        nodeDictionary = new Dictionary<string, DialogueNode>();
-        foreach (DialogueNode node in dialogue.nodes)
+        _nodeDictionary = new Dictionary<string, DialogueNode>();
+        foreach (DialogueNode node in _dialogue.nodes)
         {
-            nodeDictionary.Add(node.id, node);
+            _nodeDictionary.Add(node.id, node);
         }
     }
     private void Update()
     {
-        if (isTalking && Input.GetKeyDown(KeyCode.E))
+        if (!_isTalking) return;
+
+            if (_textWindow.activeSelf && Input.GetKeyDown(KeyCode.Return))
         {
             GoNext();
         }
@@ -41,33 +44,42 @@ public class DialogueManager : MonoBehaviour
     // 会話開始
     public void StartDialogue()
     {
-        _textWindow.SetActive(true);
-        isTalking = true;
+        _isTalking = true;
 
-        currentNode = nodeDictionary[dialogue.startID];
+        _textWindow.SetActive(true);
+        _currentNode = _nodeDictionary[_dialogue.startID];
         ShowNode();
     }
 
     void ShowNode()
     {
-        _windowText.text =  currentNode.text;
+        _windowText.text =  _currentNode.text;
     }
 
     void GoNext()
     {
-        if (string.IsNullOrEmpty(currentNode.next))
+        if (string.IsNullOrEmpty(_currentNode.next))
         {
             EndDialogue();
             return;
         }
-
-        currentNode = nodeDictionary[currentNode.next];
-        ShowNode();
+        else
+        {
+            _currentNode = _nodeDictionary[_currentNode.next];
+            ShowNode();
+        }
     }
 
     void EndDialogue()
     {
-        isTalking = false;
+        _isTalking = false;
+
         _textWindow.SetActive(false);
+        _currentNode = null;
+    }
+
+    public DialogueNode CurrentNode
+    {
+        get { return _currentNode; }
     }
 }
