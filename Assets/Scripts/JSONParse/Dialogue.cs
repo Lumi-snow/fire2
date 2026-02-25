@@ -8,8 +8,13 @@ using UnityEngine;
 public class Dialogue
 {
     public string name;
-    public string startNode;
-    public string nodes;
+    public string startID;
+    public DialogueNode[] nodes;
+}
+
+[Serializable]
+public class DialogueNode
+{
     public string id;
     public string speaker;
     public string text;

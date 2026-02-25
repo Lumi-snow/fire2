@@ -2,14 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TalkAction : MonoBehaviour
 {
+    [SerializeField] private DialogueManager dialogueManager;
+
     private GameObject _targetNpc;
     private GameObject _targetItem;
-
-    [Header("テキストウィンドウUI")]
-    [SerializeField] private GameObject _textWindow;
 
     [Header("選択肢UI")]
     [SerializeField] private GameObject _option1;
@@ -17,7 +17,6 @@ public class TalkAction : MonoBehaviour
 
     private void Start()
     {
-        _textWindow.SetActive(false);
         _option1.SetActive(false);
         _option2.SetActive(false);
     }
@@ -30,7 +29,7 @@ public class TalkAction : MonoBehaviour
             if (_targetNpc.CompareTag("NPC"))
             {
                 Debug.Log("NPCに接触して対話を試みた");
-                _textWindow.SetActive(true);
+                dialogueManager.StartDialogue();
             }
         }
     }

@@ -1,11 +1,11 @@
 ﻿{
   "name": "test",
-  "startNode": "A1",
+  "startID": "A1",
   "nodes": [
     {
       "id": "A1",
       "speaker": "わたし",
-      "text": "おまえは、ぼくによく似た偽物さん",
+      "text": "おまえは ぼくによく似たニセモノさん",
       "next": "A2"
     },
     {
