@@ -1,0 +1,39 @@
+{
+  "name": "test1",
+  "startID": "A1",
+  "nodes": [
+    {
+      "id": "A1",
+      "speaker": "わたし",
+      "text": "君に問題",
+      "next": "A2"
+    },
+    {
+      "id": "A2",
+      "speaker": "わたし",
+      "text": "お前は誰だ",
+      "choices": [
+        {
+          "text": "あなただ",
+          "next": "A3"
+        },
+        {
+          "text": "わたしだ",
+          "next": "A4"
+        }
+      ]
+    },
+    {
+      "id": "A3",
+      "speaker": "わたし",
+      "text": "たしかにそうかもな",
+      "next": null
+    },
+    {
+      "id": "A4",
+      "speaker": "うぬぼれるな",
+      "text": "君に問題",
+      "next": null
+    }
+  ]
+}

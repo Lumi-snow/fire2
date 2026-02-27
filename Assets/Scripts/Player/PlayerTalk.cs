@@ -10,6 +10,13 @@ public class PlayerTalk : IPlayerState
     
     public void Entry() 
     {
+        var npcObj = _player.GetTargetNpc();
+        if (npcObj == null) return;
+
+        var npc = npcObj.GetComponent<NPCTalkManager>();
+        if (npc == null) return;
+
+        _player.DialogueManager.LoadDialogue(npc.DialogueDataAsset);
         _player.DialogueManager.StartDialogue();
     }
     public void Update() 

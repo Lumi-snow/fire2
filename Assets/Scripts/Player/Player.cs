@@ -15,7 +15,9 @@ public class Player : MonoBehaviour
     [Header("DialogueManager")]
     [SerializeField] DialogueManager _dialogueManager;
 
-    GameObject _targetNpc;
+    //NPCÇ∆ê⁄êGÇµÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©ÇÃîªï Ç…égÇ§
+    //private GameObject _targetNpc;
+    NPCTalkManager _targetNpc;
 
     public float Speed => _speed;
     public DialogueManager DialogueManager => _dialogueManager;
@@ -37,18 +39,18 @@ public class Player : MonoBehaviour
     //ê⁄êGîªíË
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("NPC"))
+        if (other.TryGetComponent<NPCTalkManager>(out var npc))
         {
-            _targetNpc = other.gameObject;
-            Debug.Log("ê⁄êGÇµÇƒÇ¢Ç‹Ç∑");
+            _targetNpc = npc;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("NPC"))
+        if (other.TryGetComponent<NPCTalkManager>(out var npc))
         {
-            _targetNpc = null;
+            if (_targetNpc == npc)
+                _targetNpc = null;
         }
     }
 
@@ -56,9 +58,8 @@ public class Player : MonoBehaviour
     {
         return _targetNpc != null;
     }
-
-    void OnDialogueEnd()
+    public NPCTalkManager GetTargetNpc()
     {
-        ChangeState(PlayerState.Walk);
+        return _targetNpc;
     }
 }
