@@ -7,6 +7,7 @@ public class NPCTalkManager : MonoBehaviour
     [SerializeField] private DialogueDataAsset[] _dialogues;
 
     private int _dialogueCount = 0;
+    public Transform TalkPoint;
 
     public DialogueDataAsset GetDialogue()
     {

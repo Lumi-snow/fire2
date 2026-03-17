@@ -20,7 +20,10 @@ public class PlayerAnimation : MonoBehaviour
     void Update()
     {
         if (_player.CurrentState != PlayerState.Walk)
+        {
+            _animator.SetBool("IsMoving", false);
             return;
+        }
         else
         {
             if (Input.GetKey(KeyCode.W))
@@ -28,14 +31,14 @@ public class PlayerAnimation : MonoBehaviour
                 _direction = 1;
                 _isMoving = true;
             }
-            else if (Input.GetKey(KeyCode.A))
-            {
-                _direction = 2;
-                _isMoving = true;
-            }
             else if (Input.GetKey(KeyCode.S))
             {
                 _direction = 3;
+                _isMoving = true;
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                _direction = 2;
                 _isMoving = true;
             }
             else if (Input.GetKey(KeyCode.D))
@@ -49,5 +52,9 @@ public class PlayerAnimation : MonoBehaviour
             _animator.SetBool("IsMoving", _isMoving);
             _animator.SetInteger("Direction", _direction);
         }
+    }
+    public int GetDirection()
+    {
+        return _direction;
     }
 }

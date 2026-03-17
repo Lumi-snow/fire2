@@ -11,10 +11,10 @@ public class PlayerWalk : IPlayerState
     private Vector3 inputAxis;
     public void Entry() { /*...*/ }
 
-    public void Update() 
+    public void Update()
     {
         // NPCに触れていてEnter押したらTalkへ
-        if (_player.HasNpcTarget() && Input.GetKeyDown(KeyCode.Return))
+        if (_player.CanTalk() && Input.GetKeyDown(KeyCode.Return))
         {
             _player.ChangeState(PlayerState.Talk);
             return;
@@ -25,6 +25,7 @@ public class PlayerWalk : IPlayerState
         inputAxis.z = Input.GetAxis("Vertical");   // W,S
         inputAxis.y = 0;
 
+        /*
         //入力そのままの「移動ベクトル」((1,1)なら長さはroot2)
         //Vector3 velocity = new Vector3(x, 0, z).normalized;
         //長さを1に揃えた「方向ベクトル」(normalizedで長さを1にする)
@@ -38,11 +39,20 @@ public class PlayerWalk : IPlayerState
 
         //移動先の座標を設定
         _player.transform.position = destination;
+    */
     }
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
-        // 速度を代入する
-        _player.rb.velocity = inputAxis.normalized * _player.Speed;
+        Vector3 dir = inputAxis.normalized;
+
+        if (dir.magnitude > 0)
+        {
+            _player.rb.velocity = dir * _player.Speed;
+        }
+        else
+        {
+            _player.rb.velocity = Vector3.zero;
+        }
     }
     public void Exit() { /*...*/ }
 }

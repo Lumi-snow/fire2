@@ -10,5 +10,7 @@ public class PlayerIdle : IPlayerState
     public void Entry() { /*...*/ }
     public void Update()
     {    }
+
+    public void FixedUpdate() { }
     public void Exit() { /*...*/ }
 }

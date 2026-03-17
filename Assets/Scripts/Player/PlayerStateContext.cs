@@ -43,4 +43,5 @@ public class PlayerStateContext
 
     // Œ»Ý‚Ìó‘Ô‚ðUpdate‚·‚é
     public void Update() => _currentState?.Update();
+    public void FixedUpdate() => _currentState?.FixedUpdate();
 }

@@ -9,6 +9,9 @@ public interface IPlayerState
     // フレームごとに実行される
     void Update();
 
+    //物理演算や一定間隔で呼び出される
+    void FixedUpdate();
+
     // 状態終了時に実行される
     void Exit();
 }

@@ -26,6 +26,12 @@ public class PlayerTalk : IPlayerState
         if (_player.DialogueManager.CurrentNode == null)
             _player.ChangeState(PlayerState.Walk);
     }
+
+    public void FixedUpdate()
+    {
+
+    }
+
     public void Exit() 
     {
 
