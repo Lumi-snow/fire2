@@ -29,6 +29,8 @@ public class DialogueManager : MonoBehaviour
     private Dictionary<string, DialogueNode> _nodeDictionary;
     private DialogueNode _currentNode;
     private bool _isTalking;//会話開始時の入力が重複しないようにするため
+    private List<GameObject> _choiceObjects = new List<GameObject>();
+    private int _currentChoiceIndex = 0;
 
     private void Start()
     {
@@ -38,9 +40,17 @@ public class DialogueManager : MonoBehaviour
     {
         if (!_isTalking) return;
 
-            if (_textWindow.activeSelf && Input.GetKeyDown(KeyCode.Return))
+        // 選択肢がある場合
+        if (_currentNode.choices != null && _currentNode.choices.Length > 0)
         {
-            GoNext();
+            HandleChoiceInput();
+        }
+        else
+        {
+            if (_textWindow.activeSelf && Input.GetKeyDown(KeyCode.Return))
+            {
+                GoNext();
+            }
         }
     }
 
@@ -78,18 +88,23 @@ public class DialogueManager : MonoBehaviour
         ShowNode();
     }
 
+    //ノードの表示
     void ShowNode()
     {
         _windowText.text =  _currentNode.text;
 
+        //選択肢のあるノードの場合は選択肢を表示する
         if (_currentNode.choices != null && _currentNode.choices.Length > 0)
         {
             ShowChoices();
         }
     }
+    //選択肢を表示する
     void ShowChoices()
     {
         ClearChoices();
+        _choiceObjects.Clear();
+        _currentChoiceIndex = 0;
 
         foreach (var choice in _currentNode.choices)
         {
@@ -97,8 +112,61 @@ public class DialogueManager : MonoBehaviour
             var text = buttonObj.GetComponentInChildren<TextMeshProUGUI>();
             text.text = choice.text;
 
+            int index = _choiceObjects.Count;
+
             buttonObj.GetComponent<UnityEngine.UI.Button>()
-                .onClick.AddListener(() => OnChoiceSelected(choice.next));
+                    .onClick.AddListener(() => OnChoiceSelected(choice.next));
+
+            _choiceObjects.Add(buttonObj);
+        }
+        UpdateChoiceVisual();
+    }
+
+    //入力処理
+    void HandleChoiceInput()
+    {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            _currentChoiceIndex--;
+            if (_currentChoiceIndex < 0)
+                _currentChoiceIndex = _choiceObjects.Count - 1;
+
+            UpdateChoiceVisual();
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            _currentChoiceIndex++;
+            if (_currentChoiceIndex >= _choiceObjects.Count)
+                _currentChoiceIndex = 0;
+
+            UpdateChoiceVisual();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            var choice = _currentNode.choices[_currentChoiceIndex];
+            OnChoiceSelected(choice.next);
+        }
+    }
+
+    //選択肢の見た目の処理
+    void UpdateChoiceVisual()
+    {
+        for (int i = 0; i < _choiceObjects.Count; i++)
+        {
+            var text = _choiceObjects[i].GetComponentInChildren<TextMeshProUGUI>();
+            var image = _choiceObjects[i].GetComponentInChildren<UnityEngine.UI.Image>();
+            if (i == _currentChoiceIndex)
+            {
+                text.color = Color.yellow; // 選択中
+                image.color = new Color32(50, 50, 50, 255);
+            }
+            else
+            {
+                text.color = Color.white;
+                image.color = new Color32(50, 50, 50, 120);
+            }
         }
     }
     void OnChoiceSelected(string nextID)
@@ -114,7 +182,9 @@ public class DialogueManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        _choiceObjects.Clear();
     }
+    //次のノードに移動する処理
     void GoNext()
     {
         // 選択肢があるなら無視
