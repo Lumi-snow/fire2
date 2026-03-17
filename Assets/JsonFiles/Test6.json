@@ -1,23 +1,23 @@
-{
-  "name": "test1",
+﻿{
+  "name": "test6",
   "startID": "A1",
   "nodes": [
     {
       "id": "A1",
       "speaker": "わたし",
-      "text": "いやぁ",
+      "text": "なんとなく　お気づきかもしれませんが",
       "next": "A2"
     },
     {
       "id": "A2",
       "speaker": "わたし",
-      "text": "拡張性が高くて",
+      "text": "ドラクエのHD2Dリメイクから",
       "next": "A3"
     },
     {
       "id": "A3",
       "speaker": "わたし",
-      "text": "助かりますね",
+      "text": "インスピレーションを　受けています",
       "next": null
     }
   ]

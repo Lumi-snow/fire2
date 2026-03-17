@@ -22,11 +22,15 @@ public class Player : MonoBehaviour
     public float Speed => _speed;
     public DialogueManager DialogueManager => _dialogueManager;
 
+    public Rigidbody rb { get; private set; }
+
     private void Awake()
     {
         // State‚ğ‰Šú‰»
         _context = new PlayerStateContext();
         _context.Init(this, PlayerState.Walk);
+        //rigitBody‚Ìæ“¾
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Update() => _context.Update();

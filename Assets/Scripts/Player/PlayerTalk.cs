@@ -16,7 +16,9 @@ public class PlayerTalk : IPlayerState
         var npc = npcObj.GetComponent<NPCTalkManager>();
         if (npc == null) return;
 
-        _player.DialogueManager.LoadDialogue(npc.DialogueDataAsset);
+        var dialogue = npc.GetDialogue();
+
+        _player.DialogueManager.LoadDialogue(dialogue);
         _player.DialogueManager.StartDialogue();
     }
     public void Update() 

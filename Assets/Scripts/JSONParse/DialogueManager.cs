@@ -139,6 +139,14 @@ public class DialogueManager : MonoBehaviour
 
         _textWindow.SetActive(false);
         _currentNode = null;
+
+        var npcObj = FindObjectOfType<Player>().GetTargetNpc();
+        if (npcObj != null)
+        {
+            var npc = npcObj.GetComponent<NPCTalkManager>();
+            if (npc != null)
+                npc.OnDialogueFinished();
+        }
     }
 
     public DialogueNode CurrentNode

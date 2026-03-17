@@ -1,17 +1,17 @@
 {
-  "name": "test1",
+  "name": "test5",
   "startID": "A1",
   "nodes": [
     {
       "id": "A1",
       "speaker": "わたし",
-      "text": "狭い空間ですが",
+      "text": "OキーとLキーで",
       "next": "A2"
     },
     {
       "id": "A2",
       "speaker": "わたし",
-      "text": "ごゆっくりどうぞ",
+      "text": "ランタンの明るさを　変えられます",
       "next": null
     }
   ]

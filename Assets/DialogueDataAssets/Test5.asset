@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36978845b477a4743a5dbdc3b87243b1, type: 3}
-  m_Name: Test3
+  m_Name: Test5
   m_EditorClassIdentifier: 
-  jsonFile: {fileID: 4900000, guid: 948627b2694c4ae43a336b824f572aa6, type: 3}
+  jsonFile: {fileID: 4900000, guid: 7929ba80bc07fb940b83dcef70e8758a, type: 3}
   dialogueID: 
