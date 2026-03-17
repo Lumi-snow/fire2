@@ -1,0 +1,69 @@
+{
+  "name": "test1",
+  "startID": "A1",
+  "nodes": [
+    {
+      "id": "A1",
+      "speaker": "わたし",
+      "text": "ちゃんと意識して",
+      "next": "A2"
+    },
+    {
+      "id": "A2",
+      "speaker": "わたし",
+      "text": "システムを組んだのは",
+      "next": "A3"
+    },
+    {
+      "id": "A3",
+      "speaker": "わたし",
+      "text": "はじめてで",
+      "next": "A4"
+    },
+    {
+      "id": "A4",
+      "speaker": "わたし",
+      "text": "とても大変でした",
+      "next": "A5"
+    },
+    {
+      "id": "A5",
+      "speaker": "わたし",
+      "text": "褒めて",
+      "choices": [
+        {
+          "text": "すごいね",
+          "next": "B1"
+        },
+        {
+          "text": "大したことない",
+          "next": "C1"
+        }
+      ]
+    },
+    {
+      "id": "B1",
+      "speaker": "わたし",
+      "text": "ふふ",
+      "next": "B2"
+    },
+    {
+      "id": "B2",
+      "speaker": "わたし",
+      "text": "ありがとう",
+      "next": null
+    },
+    {
+      "id": "C1",
+      "speaker": "わたし",
+      "text": "人並み程度に近づけて",
+      "next": "C2"
+    },
+    {
+      "id": "C2",
+      "speaker": "わたし",
+      "text": "嬉しいです",
+      "next": null
+    }
+  ]
+}

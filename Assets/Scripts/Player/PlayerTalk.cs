@@ -10,6 +10,15 @@ public class PlayerTalk : IPlayerState
     
     public void Entry() 
     {
+        var npcObj = _player.GetTargetNpc();
+        if (npcObj == null) return;
+
+        var npc = npcObj.GetComponent<NPCTalkManager>();
+        if (npc == null) return;
+
+        var dialogue = npc.GetDialogue();
+
+        _player.DialogueManager.LoadDialogue(dialogue);
         _player.DialogueManager.StartDialogue();
     }
     public void Update() 
@@ -17,6 +26,12 @@ public class PlayerTalk : IPlayerState
         if (_player.DialogueManager.CurrentNode == null)
             _player.ChangeState(PlayerState.Walk);
     }
+
+    public void FixedUpdate()
+    {
+
+    }
+
     public void Exit() 
     {
 
