@@ -127,6 +127,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
+            AudioManager.Instance.Play("Choose");
             _currentChoiceIndex--;
             if (_currentChoiceIndex < 0)
                 _currentChoiceIndex = _choiceObjects.Count - 1;
@@ -136,6 +137,7 @@ public class DialogueManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.S))
         {
+            AudioManager.Instance.Play("Choose");
             _currentChoiceIndex++;
             if (_currentChoiceIndex >= _choiceObjects.Count)
                 _currentChoiceIndex = 0;
@@ -145,6 +147,7 @@ public class DialogueManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            AudioManager.Instance.Play("Decision");
             var choice = _currentNode.choices[_currentChoiceIndex];
             OnChoiceSelected(choice.next);
         }

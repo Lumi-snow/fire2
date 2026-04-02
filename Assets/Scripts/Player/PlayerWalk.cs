@@ -9,6 +9,10 @@ public class PlayerWalk : IPlayerState
     public PlayerState State => PlayerState.Walk;
     public PlayerWalk(Player plaeyr) => _player = plaeyr;
     private Vector3 inputAxis;
+
+    private float footstepTimer = 0f;
+    private float footstepInterval = 0.7f;
+
     public void Entry() { /*...*/ }
 
     public void Update()
@@ -24,6 +28,22 @@ public class PlayerWalk : IPlayerState
         inputAxis.x = Input.GetAxis("Horizontal"); // A,D
         inputAxis.z = Input.GetAxis("Vertical");   // W,S
         inputAxis.y = 0;
+
+        //入力がある間は効果音を鳴らす
+        if (inputAxis.magnitude > 0)
+        {
+            footstepTimer += Time.deltaTime;
+
+            if (footstepTimer >= footstepInterval)
+            {
+                AudioManager.Instance.PlayLoop("Footsteps");
+                footstepTimer = 0f;
+            }
+        }
+        else
+        {
+            AudioManager.Instance.StopLoop();
+        }
 
         /*
         //入力そのままの「移動ベクトル」((1,1)なら長さはroot2)
