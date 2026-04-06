@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -32,6 +33,12 @@ public class DialogueManager : MonoBehaviour
     private List<GameObject> _choiceObjects = new List<GameObject>();
     private int _currentChoiceIndex = 0;
 
+    [Header("文字送り速度")]
+    [SerializeField] private float _textSpeed = 0.05f;
+    private Coroutine _typingCoroutine;
+    private bool _isTyping = false;//文字表示中かどうか
+    private string _fullText;
+
     private void Start()
     {
         _textWindow.SetActive(false);
@@ -49,9 +56,29 @@ public class DialogueManager : MonoBehaviour
         {
             if (_textWindow.activeSelf && Input.GetKeyDown(KeyCode.Return))
             {
-                GoNext();
+                // 文字送り中ならスキップ
+                if (_isTyping)
+                {
+                    SkipText();
+                }
+                else
+                {
+                    GoNext();
+                }
             }
         }
+    }
+
+    //スキップ処理
+    void SkipText()
+    {
+        if (_typingCoroutine != null)
+            StopCoroutine(_typingCoroutine);
+
+        _windowText.text = _fullText;
+        _isTyping = false;
+
+        AudioManager.Instance.StopLoop();
     }
 
     //接触NPCからjsonを呼び出す
@@ -91,13 +118,20 @@ public class DialogueManager : MonoBehaviour
     //ノードの表示
     void ShowNode()
     {
-        _windowText.text =  _currentNode.text;
+        _fullText = _currentNode.text;
 
-        //選択肢のあるノードの場合は選択肢を表示する
+        if (_typingCoroutine != null)
+            StopCoroutine(_typingCoroutine);
+
+        _typingCoroutine = StartCoroutine(TypeText(_fullText));
+
+        /*
+        //選択肢があったら選択肢を表示する
         if (_currentNode.choices != null && _currentNode.choices.Length > 0)
         {
             ShowChoices();
         }
+        */
     }
     //選択肢を表示する
     void ShowChoices()
@@ -204,6 +238,7 @@ public class DialogueManager : MonoBehaviour
         ShowNode();
     }
 
+    //ダイアログの終了と一緒にダイアログを閉じる
     void EndDialogue()
     {
         _isTalking = false;
@@ -219,6 +254,37 @@ public class DialogueManager : MonoBehaviour
             var npc = npcObj.GetComponent<NPCTalkManager>();
             if (npc != null)
                 npc.OnDialogueFinished();
+        }
+    }
+
+    //文字送りcoroutine
+    IEnumerator TypeText(string text)
+    {
+        _isTyping = true;
+        _windowText.text = "";
+
+        int count = 0;
+
+        foreach (char c in text)
+        {
+            _windowText.text += c;
+
+            //文字送りの効果音
+            count++;
+            if (count % 2 == 0) // 毎文字だとうるさいので調整
+            {
+                AudioManager.Instance.Play("Message");
+            }
+
+            yield return new WaitForSeconds(_textSpeed);
+        }
+
+        _isTyping = false;
+
+        //ここで選択肢表示
+        if (_currentNode.choices != null && _currentNode.choices.Length > 0)
+        {
+            ShowChoices();
         }
     }
 
