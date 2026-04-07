@@ -41,15 +41,14 @@ public class AudioManager : MonoBehaviour
             throw new Exception("Sound " + clipName + " is not defined");
         }
 
-        _audioSource.clip = _clips[clipName];
-        _audioSource.Play();
+        _audioSource.PlayOneShot(_clips[clipName]);
     }
 
     public void PlayLoop(string clipName)
     {
         if (!_clips.ContainsKey(clipName)) return;
 
-        if (_audioSource.isPlaying) return;
+        if (_audioSource.isPlaying && _audioSource.clip == _clips[clipName]) return;
 
         _audioSource.clip = _clips[clipName];
         _audioSource.loop = true;
@@ -57,6 +56,7 @@ public class AudioManager : MonoBehaviour
     }
     public void StopLoop()
     {
+        _audioSource.loop = false;
         _audioSource.Stop();
     }
 }
